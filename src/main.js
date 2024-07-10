@@ -32,27 +32,31 @@ form.addEventListener('submit', async event => {
 
   try {
     const data = await fetchImages(query, currentPage);
-    hideLoader();
-    if (data.hits.length === 0) {
-      iziToast.info({
-        title: 'No results',
-        message: 'Sorry, there are no images matching your search query. Please try again!',
+    setTimeout(() => {
+      hideLoader();
+      if (data.hits.length === 0) {
+        iziToast.info({
+          title: 'No results',
+          message: 'Sorry, there are no images matching your search query. Please try again!',
+          position: 'center',
+        });
+        return;
+      }
+      totalHits = data.totalHits;
+      renderImages(data.hits);
+      if (data.hits.length > 0) {
+        loadMoreBtn.style.display = 'block';
+      }
+    }, 2000);
+  } catch (error) {
+    setTimeout(() => {
+      hideLoader();
+      iziToast.error({
+        title: 'Error',
+        message: 'Something went wrong. Please try again later.',
         position: 'center',
       });
-      return;
-    }
-    totalHits = data.totalHits;
-    renderImages(data.hits);
-    if (data.hits.length > 0) {
-      loadMoreBtn.style.display = 'block';
-    }
-  } catch (error) {
-    hideLoader();
-    iziToast.error({
-      title: 'Error',
-      message: 'Something went wrong. Please try again later.',
-      position: 'center',
-    });
+    }, 2000);
   }
 });
 
@@ -63,26 +67,30 @@ loadMoreBtn.addEventListener('click', async () => {
 
   try {
     const data = await fetchImages(currentQuery, currentPage);
-    hideLoader();
-    renderImages(data.hits);
-    if (currentPage * 15 >= totalHits) {
-      loadMoreBtn.style.display = 'none';
-      iziToast.info({
-        title: 'End of results',
-        message: "We're sorry, but you've reached the end of search results.",
+    setTimeout(() => {
+      hideLoader();
+      renderImages(data.hits);
+      if (currentPage * 15 >= totalHits) {
+        loadMoreBtn.style.display = 'none';
+        iziToast.info({
+          title: 'End of results',
+          message: "We're sorry, but you've reached the end of search results.",
+          position: 'center',
+        });
+      } else {
+        loadMoreBtn.style.display = 'block';
+      }
+      smoothScroll();
+    }, 2000);
+  } catch (error) {
+    setTimeout(() => {
+      hideLoader();
+      iziToast.error({
+        title: 'Error',
+        message: 'Something went wrong. Please try again later.',
         position: 'center',
       });
-    } else {
-      loadMoreBtn.style.display = 'block';
-    }
-    smoothScroll();
-  } catch (error) {
-    hideLoader();
-    iziToast.error({
-      title: 'Error',
-      message: 'Something went wrong. Please try again later.',
-      position: 'center',
-    });
+    }, 2000);
   }
 });
 

@@ -24,7 +24,7 @@
   height: 40px;
 }
 
-.form-button {
+.form-btn {
   border: none;
   border-radius: 8px;
   padding: 8px 16px;
@@ -35,8 +35,8 @@
   color: #fff;
 }
 
-.form-button:hover,
-.form-button:focus {
+.form-btn:hover,
+.form-btn:focus {
   background: #6c8cff;
 }
 
@@ -83,7 +83,7 @@
   animation: rotation 1s linear infinite;
 }
 
-.load-more {
+.load-more-btn {
   display: none;
   margin: 20px auto;
   border: none;
@@ -94,8 +94,8 @@
   color: #fff;
 }
 
-.load-more:hover,
-.load-more:focus {
+.load-more-btn:hover,
+.load-more-btn:focus {
   background: #6c8cff;
 }
 
